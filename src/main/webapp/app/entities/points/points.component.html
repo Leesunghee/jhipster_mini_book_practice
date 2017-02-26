@@ -1,0 +1,68 @@
+<div>
+    <h2>
+        <span jhiTranslate="demoApp.points.home.title">Points</span>
+        <button class="btn btn-primary float-right create-points" [routerLink]="['/', { outlets: { popup: ['points-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="demoApp.points.home.createLabel">
+            Create new Points
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="points">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="date"><span jhiTranslate="demoApp.points.date">Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="exercise"><span jhiTranslate="demoApp.points.exercise">Did you exercise?</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="meals"><span jhiTranslate="demoApp.points.meals">Did you meals?</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="alcohol"><span jhiTranslate="demoApp.points.alcohol">Did you alcohol?</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="notes"><span jhiTranslate="demoApp.points.notes">Notes</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="user.login"><span jhiTranslate="demoApp.points.user">User</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let points of points ;trackBy: trackId">
+                <td><a [routerLink]="['../points', points.id ]">{{points.id}}</a></td>
+                <td>{{points.date | date:'mediumDate'}}</td>
+                <td>{{points.exercise}}</td>
+                <td>{{points.meals}}</td>
+                <td>{{points.alcohol}}</td>
+                <td>{{points.notes}}</td>
+                <td>
+                    {{points.user?.login}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../points', points.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'points/'+ points.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'points/'+ points.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

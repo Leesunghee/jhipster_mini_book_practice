@@ -1,0 +1,53 @@
+
+
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myBlood_pressureLabel" jhiTranslate="demoApp.blood_pressure.home.createOrEditLabel">Create or edit a Blood Pressure</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!blood_pressure.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="blood_pressure.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="demoApp.blood_pressure.timestamp" for="field_timestamp">Timestamp</label>
+            <div class="input-group">
+                <input id="field_timestamp" type="datetime-local" class="form-control" name="timestamp" [(ngModel)]="blood_pressure.timestamp"
+                  />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="demoApp.blood_pressure.systolic" for="field_systolic">Systolic</label>
+            <input type="text" class="form-control" name="systolic" id="field_systolic"
+                [(ngModel)]="blood_pressure.systolic"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="demoApp.blood_pressure.diastolic" for="field_diastolic">Diastolic</label>
+            <input type="number" class="form-control" name="diastolic" id="field_diastolic"
+                [(ngModel)]="blood_pressure.diastolic"
+             />
+        </div>
+
+        <div class="form-group">
+            <label jhiTranslate="demoApp.blood_pressure.user" for="field_user">User</label>
+            <select class="form-control" id="field_user" name="user" [(ngModel)]="blood_pressure.user" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="userOption.id === blood_pressure.user?.id ? blood_pressure.user : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

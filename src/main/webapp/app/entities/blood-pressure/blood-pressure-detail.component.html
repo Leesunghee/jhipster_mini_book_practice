@@ -1,0 +1,37 @@
+
+<div *ngIf="blood_pressure">
+    <h2><span jhiTranslate="demoApp.blood_pressure.detail.title">Blood Pressure</span> {{blood_pressure.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="demoApp.blood_pressure.timestamp">Timestamp</span></dt>
+        <dd>
+            <span>{{blood_pressure.timestamp | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="demoApp.blood_pressure.systolic">Systolic</span></dt>
+        <dd>
+            <span>{{blood_pressure.systolic}}</span>
+        </dd>
+        <dt><span jhiTranslate="demoApp.blood_pressure.diastolic">Diastolic</span></dt>
+        <dd>
+            <span>{{blood_pressure.diastolic}}</span>
+        </dd>
+        <dt><span jhiTranslate="demoApp.blood_pressure.user">User</span></dt>
+        <dd>
+            {{blood_pressure.user?.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'blood-pressure/'+ blood_pressure.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
